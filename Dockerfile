@@ -9,8 +9,27 @@
 # Require: Docker 1.9.1 (http://www.docker.io/)
 # Done on Windobe !
 # -----------------------------------------------------------------------------
-FROM kelvinchen/seedbox:base
-MAINTAINER LM
+FROM debian:jessie
+MAINTAINER LM, Kelvin Chen <kelvin@kelvinchen.org>
+
+# Install all dependencies that are used in multiple images.
+RUN echo "deb http://httpredir.debian.org/debian jessie non-free" \
+        >> /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install --no-install-recommends -y \
+        vim \
+        ca-certificates \
+        python \
+        python-dev \
+        curl \
+        git \
+        nginx \
+        unzip \
+        unrar \
+        supervisor \
+        bzip2 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
